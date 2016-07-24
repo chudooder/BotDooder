@@ -31,4 +31,4 @@ async def on_member_update(before, after):
     for module in modules:
         await module.on_member_update(before, after)
 
-client.run(config.discordApi)
+client.run(config['discordApi'])
