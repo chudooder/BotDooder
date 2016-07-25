@@ -1,4 +1,4 @@
-from module import Module
+from modules.module import Module
 from collections import defaultdict
 from datetime import timedelta, datetime
 import re

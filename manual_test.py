@@ -1,11 +1,11 @@
 import sys
 import discord
 import asyncio
-from gametracker import GameTracker
-from diceroller import DiceRoller
-from predictgame import PredictGame
+from modules.gametracker import GameTracker
+from modules.diceroller import DiceRoller
+from modules.predictgame import PredictGame
 
-class SpoofClient:
+class SpoofClient(discord.Client):
     async def send_message(self, channel, content):
         print(content)
 

@@ -3,9 +3,9 @@ import asyncio
 import json
 from collections import defaultdict
 from datetime import timedelta, datetime
-from gametracker import GameTracker
-from diceroller import DiceRoller
-from predictgame import PredictGame
+from modules.gametracker import GameTracker
+from modules.diceroller import DiceRoller
+from modules.predictgame import PredictGame
 
 config = json.load(open('config.json'))
 

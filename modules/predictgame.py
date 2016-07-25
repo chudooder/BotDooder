@@ -1,5 +1,5 @@
 from dota2py import api
-from module import Module
+from modules.module import Module
 from collections import defaultdict
 import json
 import discord
