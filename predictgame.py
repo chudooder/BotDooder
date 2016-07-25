@@ -7,6 +7,7 @@ import re
 import pymongo
 import threading
 import asyncio
+import time
 
 config = json.load(open('config.json'))
 
@@ -32,8 +33,7 @@ class PredictGame(Module):
         self.default_channel = None
 
         # start the 60 second status check loop
-        thread = threading.Thread(target = self.start_status_check)
-        thread.start()
+        self.client.loop.create_task(self.check_game_status())
 
     async def on_message(self, message):
         content = re.findall("([^\"]\\S*|\".+?\")\\s*", message.content)
@@ -210,24 +210,18 @@ class PredictGame(Module):
         return
 
     async def check_game_status(self):
-        while True:
+        while not self.client.is_closed:
             deletions = []
             for match_id, game in self.predictions.items():
                 game_status = api.get_match_details(match_id)['result']
                 if 'radiant_win' in game_status:
-                    await self.resolve_game(match_id, game_status['radiant_win'])
+                    self.resolve_game(match_id, game_status['radiant_win'])
                     deletions.append(match_id)
 
             for m in deletions:
                 self.predictions.pop(m, None)
 
             await asyncio.sleep(30)
-
-    def start_status_check(self):
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        loop.run_until_complete(self.check_game_status())
-
 
     async def resolve_game(self, match_id, radiant_win):
         response_list = []
