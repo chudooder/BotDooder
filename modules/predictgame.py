@@ -203,15 +203,18 @@ class PredictGame(Module):
 
     async def check_game_status(self):
         while not self.client.is_closed:
-            deletions = []
-            for match_id, game in self.predictions.items():
-                game_status = api.get_match_details(match_id)['result']
-                if 'radiant_win' in game_status:
-                    self.resolve_game(match_id, game_status['radiant_win'])
-                    deletions.append(match_id)
+            try:
+                deletions = []
+                for match_id, game in self.predictions.items():
+                    game_status = api.get_match_details(match_id)['result']
+                    if 'radiant_win' in game_status:
+                        self.resolve_game(match_id, game_status['radiant_win'])
+                        deletions.append(match_id)
 
-            for m in deletions:
-                self.predictions.pop(m, None)
+                for m in deletions:
+                    self.predictions.pop(m, None)
+            except:
+                print('Could not fetch match data.')
 
             await asyncio.sleep(30)
 
