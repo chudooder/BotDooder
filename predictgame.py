@@ -258,7 +258,7 @@ class PredictGame(Module):
     async def send_leaderboard(self, message):
         response_list = []
         users = self.fredpoints.find({})
-        for u in sorted(users, key=lambda x: x['fp']):
+        for u in sorted(users, key=lambda x: -x['fp']):
             percent_correct = 0
             if u['predictions'] > 0:
                 percent_correct = int(float(u['correct']) / u['predictions'] * 100)
