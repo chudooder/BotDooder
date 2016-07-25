@@ -13,6 +13,7 @@ client = discord.Client()
 modules = []
 modules.append(GameTracker(client))
 modules.append(DiceRoller(client))
+modules.append(PredictGame(client))
 
 @client.event
 async def on_ready():

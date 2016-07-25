@@ -3,13 +3,15 @@ import discord
 import asyncio
 from gametracker import GameTracker
 from diceroller import DiceRoller
+from predictgame import PredictGame
 
 class SpoofClient:
     async def send_message(self, channel, content):
         print(content)
 
-module = GameTracker(SpoofClient())
+# module = GameTracker(SpoofClient())
 # module = DiceRoller(SpoofClient())
+module = PredictGame(SpoofClient())
 
 async def test():
     while True:
