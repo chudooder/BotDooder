@@ -5,6 +5,7 @@ from collections import defaultdict
 from datetime import timedelta, datetime
 from gametracker import GameTracker
 from diceroller import DiceRoller
+from predictgame import PredictGame
 
 config = json.load(open('config.json'))
 
