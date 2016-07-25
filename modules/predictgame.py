@@ -208,7 +208,7 @@ class PredictGame(Module):
                 for match_id, game in self.predictions.items():
                     game_status = api.get_match_details(match_id)['result']
                     if 'radiant_win' in game_status:
-                        self.resolve_game(match_id, game_status['radiant_win'])
+                        await self.resolve_game(match_id, game_status['radiant_win'])
                         deletions.append(match_id)
 
                 for m in deletions:
