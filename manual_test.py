@@ -4,6 +4,7 @@ import asyncio
 from modules.gametracker import GameTracker
 from modules.diceroller import DiceRoller
 from modules.predictgame import PredictGame
+from modules.help import Help
 
 class SpoofClient(discord.Client):
     async def send_message(self, channel, content):
@@ -11,7 +12,8 @@ class SpoofClient(discord.Client):
 
 # module = GameTracker(SpoofClient())
 # module = DiceRoller(SpoofClient())
-module = PredictGame(SpoofClient())
+# module = PredictGame(SpoofClient())
+module = Help(SpoofClient())
 
 async def test():
     while True:

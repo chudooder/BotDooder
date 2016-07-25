@@ -6,6 +6,7 @@ from datetime import timedelta, datetime
 from modules.gametracker import GameTracker
 from modules.diceroller import DiceRoller
 from modules.predictgame import PredictGame
+from modules.help import Help
 
 config = json.load(open('config.json'))
 
@@ -15,6 +16,7 @@ modules = []
 modules.append(GameTracker(client))
 modules.append(DiceRoller(client))
 modules.append(PredictGame(client))
+modules.append(Help(client))
 
 @client.event
 async def on_ready():
