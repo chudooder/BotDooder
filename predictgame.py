@@ -45,7 +45,7 @@ class PredictGame(Module):
         elif content[0] == '!fp':
             await self.send_fred_points(message)
 
-        elif content[0] == '!predict':
+        elif content[0] == '!bet':
             await self.predict(message, content)
 
         elif content[0] == '!leaderboard':
