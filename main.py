@@ -1,4 +1,4 @@
-import discord
+aimport discord
 import asyncio
 import json
 import re
@@ -37,7 +37,10 @@ class BotDooder(discord.Client):
         if content[0] not in self.cmdlist:
             return
         func = self.cmdlist[content[0]]
-        await func(message, content)
+        try:
+            await func(message, content)
+        except:
+            print('some error occurred')
 
     async def on_member_update(self, before, after):
         for module in self.modules:
