@@ -17,11 +17,10 @@ class GameTracker(Module):
 
         self.game_states = defaultdict(lambda: {'game': None, 'time': None})
 
-    async def on_message(self, message):
-        content = re.findall("([^\"]\\S*|\".+?\")\\s*", message.content)
-        content = [re.sub(r'[\'\"]', '', s) for s in content if s != None]
-        if content[0] != '!playtime':
-            return
+    def get_commands(self):
+        return { '!playtime': self.display_game_time }
+
+    async def display_game_time(self, message, content):
 
         # search target user or game: default message sender's name
         target = ''

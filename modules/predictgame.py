@@ -35,23 +35,15 @@ class PredictGame(Module):
         # start the 60 second status check loop
         self.client.loop.create_task(self.check_game_status())
 
-    async def on_message(self, message):
-        content = re.findall("([^\"]\\S*|\".+?\")\\s*", message.content)
-        content = [re.sub(r'[\'\"]', '', s) for s in content if s != None]
+    def get_commands(self):
+        return {
+            '!livegames': self.send_live_games,
+            '!fp': self.send_fred_points,
+            '!bet': self.predict,
+            '!leaderboard': self.send_leaderboard
+        }
 
-        if content[0] == '!livegames':
-            await self.send_live_games(message)
-
-        elif content[0] == '!fp':
-            await self.send_fred_points(message)
-
-        elif content[0] == '!bet':
-            await self.predict(message, content)
-
-        elif content[0] == '!leaderboard':
-            await self.send_leaderboard(message)
-
-    async def send_live_games(self, message):
+    async def send_live_games(self, message, content):
         league_games = api.get_live_league_games()['result']
         response_list = []
         for game in league_games['games']:
@@ -79,7 +71,7 @@ class PredictGame(Module):
         response = '\n'.join(response_list)
         await self.client.send_message(message.channel, response)
 
-    async def send_fred_points(self, message):
+    async def send_fred_points(self, message, content):
         name = message.author.name
         fp = self.get_available_fp(name)
         response = '%s has %d FP.' % (name, fp)
@@ -255,7 +247,7 @@ class PredictGame(Module):
 
         await self.client.send_message(self.default_channel, '\n'.join(response_list))
 
-    async def send_leaderboard(self, message):
+    async def send_leaderboard(self, message, content):
         response_list = []
         users = self.fredpoints.find({})
         for u in sorted(users, key=lambda x: -x['fp']):

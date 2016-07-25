@@ -8,7 +8,10 @@ class Help(Module):
 
         self.docs = open('cmdlist.md').read()
 
-    async def on_message(self, message):
+    def get_commands(self):
+        return { '!help': self.send_help }
+
+    async def send_help(self, message, content):
         content = re.findall("([^\"]\\S*|\".+?\")\\s*", message.content)
         content = [re.sub(r'[\'\"]', '', s) for s in content if s != None]
 

@@ -6,11 +6,10 @@ class DiceRoller(Module):
     def __init__(self, client):
         Module.__init__(self, 'DiceRoller', client)
 
-    async def on_message(self, message):
-        content = message.content.split(' ')
-        if content[0] != '!roll':
-            return
+    def get_commands(self):
+        return {'!roll': self.roll_dice}
 
+    async def roll_dice(self, message, content):
         minval = 1
         maxval = 100
         num_dice = 1
