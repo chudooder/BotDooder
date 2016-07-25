@@ -265,7 +265,9 @@ class PredictGame(Module):
         response_list = []
         users = self.fredpoints.find({})
         for u in sorted(users, key=lambda x: x['fp']):
-            percent_correct = int(float(u['correct']) / u['predictions'] * 100)
+            percent_correct = 0
+            if u['predictions'] > 0:
+                percent_correct = int(float(u['correct']) / u['predictions'] * 100)
             response = '%s - %d FP - %d victories, %d predictions (%d%%)' % \
                 (u['name'], u['fp'], u['correct'], u['predictions'], percent_correct)
             response_list.append(response)
